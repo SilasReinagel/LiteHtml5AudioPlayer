@@ -2,6 +2,8 @@
 :root {
   --transparent-white: rgba(255, 255, 255, 0.75);
   --shadow: rgba(0, 0, 0, 0.4);
+  --control-color: #999;
+  --light-color: #bbb;
 }
 
 #audio  {
@@ -25,7 +27,7 @@
 #song-controls label {
   margin: auto 0.2em;
   min-width: 8em;
-  color: #999;
+  color: var(--control-color);
   font-weight: 300;
   font-size: 0.9em;
   text-align: center;
@@ -69,7 +71,7 @@
 
 #artist, 
 #album {
-  color: #999;
+  color: var(--control-color);;
 }
 
 #song-controls {
@@ -104,8 +106,8 @@
 }
 
 #audio #playlist {
-  border-top: 1px solid #bbb;
-  border-bottom: 1px solid #bbb;
+  border-top: 1px solid var(--light-color);
+  border-bottom: 1px solid var(--light-color);
   margin-bottom: 0.5em;
   list-style-type: none;
   counter-reset: none;
