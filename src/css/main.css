@@ -1,0 +1,57 @@
+:root {
+  --transparent-white: rgba(255, 255, 255, 0.75);
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* CSS Reset */
+
+body,
+button {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
+svg {
+  max-height: 100%;
+}
+
+/* Sample Site */
+
+.site-wrap {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  min-height: 100vh; 
+}
+
+.container {
+  width: 100%;
+  display: flex; 
+  justify-content: center;
+}
+
+.measure {
+  margin: 0 auto;
+  max-width: 60vw;
+}
+
+.example-bg {
+  background-color: #434343;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}

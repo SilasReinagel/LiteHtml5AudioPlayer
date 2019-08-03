@@ -1,0 +1,124 @@
+
+:root {
+  --transparent-white: rgba(255, 255, 255, 0.75);
+  --shadow: rgba(0, 0, 0, 0.4);
+}
+
+#audio  {
+  border-width: 0px;
+  transition: 0.2s;
+  margin: 1em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--transparent-white);
+  box-shadow: 0 4px 8px 0 var(--shadow);
+}
+
+#play-pause-button {
+  width: 1.6em;
+  height: auto;
+  padding: 0.4em 0.4em 0.4em 0.1em;
+}
+
+#song-controls label {
+  margin: auto 0.2em;
+  min-width: 8em;
+  color: #999;
+  font-weight: 300;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+#volume-control {
+  margin: auto 0.4em;
+  max-width: 100px;
+}
+
+#song-controls input[type="image"], 
+#song-controls img {
+  filter: invert(.5) brightness(1.2);
+  margin: 0.1em;
+}
+
+#song-controls input[type="image"]:focus, 
+#song-controls img:focus {
+  outline: none;
+}
+
+#song-controls input[type="image"]:hover, 
+#song-controls img:hover {
+  filter: invert(.5) brightness(0.5);
+  outline: none;
+}
+
+#song-controls input[type="image"]:active,
+#song-controls img:active {
+  filter: invert(.5) brightness(0.2);
+  outline: none;
+}
+
+#artist,
+#album,
+#song-name {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  margin: 0.25em 0;
+}
+
+#artist, 
+#album {
+  color: #999;
+}
+
+#song-controls {
+  margin: 1em 0.2em 0.4em 0.2em;
+}
+
+#song-img {
+  max-height: 160px;
+  min-height: 160px;
+  min-width: 160px;
+  width: auto;
+  margin: 0 1.3em;
+}
+
+.audio-player-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  wrap: wrap;
+  overflow: hidden;
+}
+
+.audio-player-column {
+  display: flex;
+  flex-direction: column;
+  wrap: nowrap;
+  overflow: hidden;
+}
+
+#audio .center-vertically {
+  align-content: center;
+}
+
+#audio #playlist {
+  border-top: 1px solid #bbb;
+  border-bottom: 1px solid #bbb;
+  margin-bottom: 0.5em;
+  list-style-type: none;
+  counter-reset: none;
+}
+
+#audio #playlist li {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  margin: 0.7em 0.2em;
+}
+
+#audio #playlist li:before {
+  content: "";
+  counter-increment: level1;
+}

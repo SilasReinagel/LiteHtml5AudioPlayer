@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Lite HTML 5 - Audio Player Sample</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/audioplayer.css">
+    <link rel="stylesheet" href="/css/slider.css">
+    <script src="/js/audioplayer.js"></script>
+  </head>
+  <body>
+    <div class="example-bg site-wrap">
+      <div class="measure">        
+        <div class="container" role="main">
+
+          <section id="audio" class="card hidden white-bg" id="audio-player-div">
+            <audio id="audio-player"></audio>
+            <div id="song-div">
+              <div class="audio-player-row">
+                <img id="song-img"/>
+                <div class="audio-player-column">
+                  <div id="song-info-div" class="audio-player-column">
+                    <label id="artist"></label>
+                    <label id="song-name"></label>
+                    <label id="album"></label>
+                  </div>
+                  <div id="song-controls" class="audio-player-row center-vertically">
+                    <input id="play-pause-button" class="control-button" type="image" src="/images/icons/play.svg"/>
+                    <input id="previous-button" class="control-button" type="image" src="/images/icons/previous.svg"/>
+                    <input id="next-button" class="control-button" type="image" src="/images/icons/next.svg"/>
+                    <label id="song-progress-text">0:00 / 0:00</label>
+                    <img id="volume-img">
+                    <input id="volume-control" type="range" min="0" max="100" step="1" value="30"/>
+                    <input id="loop-button" class="control-button hidden" type="image" src="/images/icons/loop.svg">
+                  </div>
+                  <input id="song-progress-control" type="range" min="0" max="0" step="1" value="0"/>
+                </div>
+              </div>
+            </div>            
+            <ol class="playlist" id="playlist"></ol>
+          </section>
+          
+          <script type="text/javascript">
+              new AudioPlayer([
+                  new Song("Sylvius", "Onwards and Upwards", "To Arcadia", 
+                    "https://silasreinagel.sirv.com/LiteHtml5AudioPlayer/OnwardsAndUpwards.jpg", 
+                    ["https://sylvius-piano-songs.s3-us-west-1.amazonaws.com/Onwards_And_Upwards_Raw_Preview.mp3"]),
+                    new Song("Sylvius", "Onwards and Upwards", "To Arcadia", 
+                    "https://silasreinagel.sirv.com/LiteHtml5AudioPlayer/TheFoxAndTheFrog.jpg", 
+                    ["https://sylvius-piano-songs.s3-us-west-1.amazonaws.com/Onwards_And_Upwards_Raw_Preview.mp3"]),
+                    
+              ]);
+          </script>
+
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
+
+
