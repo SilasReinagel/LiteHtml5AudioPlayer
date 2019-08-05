@@ -139,21 +139,35 @@ function ImageButton(id, onclick) {
 }
 
 function VolumeControl(settings) {
-    this._img = new Image("volume-img");
-    this._img.setImg("/images/icons/volume_down.svg");
+    this._img = new ImageButton("volume-img", () => {
+        let newToggleVolume = parseInt(this._control.getValue());
+        this._control.setValue(this._toggleVolume);
+        this._updateVolume();
+        this._toggleVolume = newToggleVolume;
+    });
     this._control = new Range("volume-control", () => this._updateVolume(), () => this._updateVolume(), () => this._updateVolume());
     this._control.setValue(settings.volume);
+    this._toggleVolume = 0;
 
     this._updateVolume = () => {
+        const volume = parseInt(this._control.getValue());
+        this._updateVolumeImage();
+        if (volume > 0 && this._toggleVolume > 0)
+            this._toggleVolume = 0;
+        settings.setVolume(volume);
+    };
+
+    this._updateVolumeImage = () => {
         const volume = parseInt(this._control.getValue());
         if (volume === 0)
             this._img.setImg("/images/icons/volume_off.svg");
         else if (volume <= 50)
             this._img.setImg("/images/icons/volume_down.svg");
         else
-            this._img.setImg("/images/icons/volume_up.svg");
-        settings.setVolume(volume);
+            this._img.setImg("/images/icons/volume_up.svg");   
     };
+  
+    this._updateVolumeImage();
 }
 
 function Image(id) {
