@@ -1,5 +1,17 @@
-function AudioPlayer(songs) {
-    this._audio = new Audio("audio-player");
+function AudioSettings({ volume, isLooping }) {
+    console.log({ volume, isLooping });
+    this.volume = volume || 50;
+    this.isLooping = isLooping || false;
+    this.setVolume = (volume) => {
+        this.volume = volume;
+        this.onVolumeChange(volume);
+    }
+    this.onVolumeChange = (volume) => {};
+};
+
+function AudioPlayer(settings, songs) {
+    this._settings = settings || new AudioSettings({ volume: 80, isLooping: false });
+    this._audio = new Audio("audio-player", settings);
     this._songImg = new Image("song-img");
     this._artist = new Text("artist");
     this._name = new Text("song-name");
@@ -8,7 +20,7 @@ function AudioPlayer(songs) {
         const isPlaying = this._audio.toggleState();
         this._playPause.setImg(isPlaying ? "/images/icons/pause.svg" : "/images/icons/play.svg");
     });
-    this._volumeControl = new VolumeControl(this._audio);
+    this._volumeControl = new VolumeControl(this._settings);
     this._songProgress = new SongProgress(this._audio);
     this._playlist = new Playlist(songs, this._audio, (song) => {
         this._songImg.setImg(song.img);
@@ -19,11 +31,12 @@ function AudioPlayer(songs) {
     document.getElementById('audio').classList.remove('hidden');
 }
 
-function Audio(id) {
+function Audio(id, settings) {
     this._element = document.getElementById(id);
     this._audioSources = [];
     this._isPlaying = false;
     this._isSeeking = false;
+    this._element.volume = settings.volume / 100;
     this._element.ondurationchange = () => {};
     this._element.onplay = () => this._isPlaying = true;
     this._element.onpause = () => {
@@ -90,7 +103,7 @@ function Audio(id) {
 
     this.pause = () => this._element.pause();
 
-    this.setVolume = (volume) => this._element.volume = volume;
+    this.setVolume = (volume) => this._element.volume = volume / 100;
 
     this.setAudioSources = (sources) => {
         for (let source of this._audioSources)
@@ -114,6 +127,8 @@ function Audio(id) {
             return "audio/ogg";
         return "audio/mpeg";
     };
+
+    settings.onVolumeChange = (volume) => this.setVolume(volume);
 }
 
 function ImageButton(id, onclick) {
@@ -130,9 +145,8 @@ function VolumeControl(audio) {
         this._updateVolume();
         this._toggleVolume = newToggleVolume;
     });
-    this._img.setImg("/images/icons/volume_down.svg");
     this._control = new Range("volume-control", () => this._updateVolume(), () => this._updateVolume(), () => this._updateVolume());
-    this._control.setValue(50);
+    this._control.setValue(settings.volume);
     this._toggleVolume = 0;
 
     this._updateVolume = () => {
@@ -140,7 +154,7 @@ function VolumeControl(audio) {
         this._updateVolumeImage();
         if (volume > 0 && this._toggleVolume > 0)
             this._toggleVolume = 0;
-        audio.setVolume(volume / 100);
+        settings.setVolume(volume);
     };
 
     this._updateVolumeImage = () => {
@@ -150,8 +164,10 @@ function VolumeControl(audio) {
         else if (volume <= 50)
             this._img.setImg("/images/icons/volume_down.svg");
         else
-            this._img.setImg("/images/icons/volume_up.svg");
-    }
+            this._img.setImg("/images/icons/volume_up.svg");   
+    };
+  
+    this._updateVolumeImage();
 }
 
 function Image(id) {
