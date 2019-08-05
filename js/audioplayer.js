@@ -239,7 +239,10 @@ function Playlist(songs, audio, onSongChange) {
     this._playlist = new List("playlist");
     this._playlist.setItems(songs.map((song, index) => {
         let element = document.createElement("li");
-        element.innerText = song.name;
+        let play = document.createElement("img");
+        play.src = "/images/icons/play.svg";
+        element.appendChild(play);
+        element.appendChild(document.createTextNode(song.name));
         element.onclick = () => this._changeSong(index);
         return element;
     }));
