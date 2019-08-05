@@ -138,7 +138,7 @@ function ImageButton(id, onclick) {
     this.setImg = (src) => this._element.src = src;
 }
 
-function VolumeControl(audio) {
+function VolumeControl(settings) {
     this._img = new ImageButton("volume-img", () => {
         let newToggleVolume = parseInt(this._control.getValue());
         this._control.setValue(this._toggleVolume);
