@@ -130,3 +130,22 @@
   content: "";
   counter-increment: level1;
 }
+
+#audio #playlist li:hover {
+  cursor: pointer;
+}
+
+#audio #playlist li img {
+  visibility: hidden;
+  margin: 0 1em 0 0;
+  width: 1em;
+  height: auto;
+}
+
+#audio #playlist li:hover img{
+  visibility: visible;
+}
+
+#audio #playlist div {
+  justify-content: start;
+}
