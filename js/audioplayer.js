@@ -238,13 +238,13 @@ function Playlist(songs, audio, onSongChange) {
     this._isLooping = false;
     this._playlist = new List("playlist");
     this._playlist.setItems(songs.map((song, index) => {
-        let element = document.createElement("li");
-        let play = document.createElement("img");
-        play.src = "/images/icons/play.svg";
-        element.appendChild(play);
-        element.appendChild(document.createTextNode(song.name));
-        element.onclick = () => this._changeSong(index);
-        return element;
+        let item = document.getElementById("sample-item").cloneNode(true);
+        let songName = item.getElementsByTagName("label")[0];
+        songName.innerHTML = song.name;
+        item.onclick = () => this._changeSong(index);
+        item.removeAttribute("id");
+        songName.removeAttribute("id");
+        return item;
     }));
     this._loop = new ImageButton("loop-button", () => this._isLooping = !this._isLooping);
     this._previous = new ImageButton("previous-button", () => {
@@ -287,6 +287,7 @@ function Song(artist, name, album, img, sources) {
 function List(id) {
     this._element = document.getElementById(id);
 
+    this.getItems = () => this._element.children;
     this.setItems = (items) => {
         while(this._element.firstChild)
             this._element.removeChild(this._element.firstChild);

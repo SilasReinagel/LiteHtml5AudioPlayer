@@ -139,3 +139,7 @@
 #audio #playlist li:hover img{
   visibility: visible;
 }
+
+#audio #playlist div {
+  justify-content: start;
+}
