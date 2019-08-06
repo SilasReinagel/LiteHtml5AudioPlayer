@@ -136,6 +136,7 @@ function ImageButton(id, onclick) {
     this._element.onclick = onclick;
 
     this.setImg = (src) => this._element.src = src;
+    this.setEnabled = (isEnabled) => this._element.disabled = !isEnabled;
 }
 
 function VolumeControl(settings) {
@@ -257,19 +258,13 @@ function Playlist(songs, audio, onSongChange) {
         element.onclick = () => this._changeSong(index);
         return element;
     }));
-    this._loop = new ImageButton("loop-button", () => this._isLooping = !this._isLooping);
-    this._previous = new ImageButton("previous-button", () => {
-        if (this._songIndex !== 0)
-            this._changeSong(this._songIndex - 1);
-        else if (this._isLooping)
-            this._changeSong(songs.length - 1);
+    this._loop = new ImageButton("loop-button", () => {
+        this._isLooping = !this._isLooping;
+        this._previous.setEnabled(true);
+        this._next.setEnabled(true);
     });
-    this._next = new ImageButton("next-button", () => {
-        if (this._songIndex !== songs.length - 1)
-            this._changeSong(this._songIndex + 1);
-        else if (this._isLooping)
-            this._changeSong(0);
-    });
+    this._previous = new ImageButton("previous-button", () => this._changeSong(this._songIndex === 0 ? songs.length - 1 : this._songIndex - 1));
+    this._next = new ImageButton("next-button", () => this._changeSong(this._songIndex === songs.length - 1 ? 0 : this._songIndex + 1));
 
     this._changeSong = (songIndex) => {
         this.selectSong(songIndex);
@@ -280,6 +275,8 @@ function Playlist(songs, audio, onSongChange) {
         if (songIndex === this._songIndex)
             return;
         onSongChange(songs[songIndex]);
+        this._previous.setEnabled(songIndex !== 0 || this._isLooping);
+        this._next.setEnabled(songIndex !== songs.length - 1 || this._isLooping);
         audio.setAudioSources(songs[songIndex].sources);
         this._songIndex = songIndex;
     };
