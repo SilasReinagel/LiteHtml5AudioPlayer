@@ -64,6 +64,7 @@
 #song-controls input[type="image"]:disabled {
   opacity: 0.0;
   outline: none;
+  cursor: default;
 }
 
 #artist,
