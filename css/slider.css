@@ -28,6 +28,10 @@ input[type="range"]:active {
   box-shadow: none;
   outline: none;
 }
+
+input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
   
 input[type="range"]::-webkit-slider-runnable-track {
   background: var(--background-filled-slider);
