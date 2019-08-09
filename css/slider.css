@@ -1,5 +1,6 @@
 :root {
   --slider-height: 6px;
+  --slider-width:100%;
   --slider-border-width: 0px;
   --slider-border-color: #d5d5d5;
   --background-slider: #bbb;
@@ -18,9 +19,11 @@ input[type="range"] {
   cursor: pointer;
   display: inline-block;
   height: var(--slider-height);
-  width: var(--slider-width);
   outline: none;
   margin: 2px 0.2em;
+}
+.song-progress-control {
+  width: var(--slider-width);
 }
 
 input[type="range"]:focus,
