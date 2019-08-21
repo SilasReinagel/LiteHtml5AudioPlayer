@@ -1,0 +1,17 @@
+
+$shadow: rgba(0,0,0,0.4);
+$viewport-small: 32em;
+$transparent-white: rgba(255, 255, 255, 0.75);
+$shadow: rgba(0, 0, 0, 0.4);
+$control-color: #666;
+$light-color: #bbb;
+$background-color: #fff;
+$standard-shadow: 0 4px 8px 0 $shadow;
+
+// Page width
+$measure-width: 60rem !default;
+
+// Viewport widths
+$viewport-small: 32em;
+$viewport-medium: 48em;
+$viewport-large: 64em;

@@ -1,0 +1,135 @@
+$slider-height: 6px;
+$slider-width: 100%;
+$slider-border-width: 0px;
+$slider-border-color: #d5d5d5;
+$background-slider: #bbb;
+$background-filled-slider: #999;
+$thumb-width: 10px;
+$thumb-height: 6px;
+$thumb-radius: 0;
+$thumb-background: #999;
+$thumb-border: 0px solid #777;
+$shadow-size: -8px;
+$fit-thumb-in-slider: -8px;  
+
+input[type="range"] {
+  background: $background-slider;
+  cursor: pointer;
+  display: inline-block;
+  height: $slider-height;
+  outline: none;
+  margin: 2px 0.2em;
+}
+
+.song-progress-control {
+  width: $slider-width;
+}
+
+input[type="range"]:focus,
+input[type="range"]:active {
+  box-shadow: none;
+  outline: none;
+}
+
+/* Webkit */
+  
+input[type="range"]::-webkit-slider-runnable-track:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: $background-filled-slider;
+  content: '';
+  height: $slider-height;
+  pointer-events: none;
+  border: $slider-border-width solid $slider-border-color;
+}
+  
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: $thumb-background;
+  color: $thumb-background;
+  border-radius: $thumb-radius;
+  margin-top: 0px;
+  max-height: $thumb-height;
+  max-width: $thumb-width;
+  position: relative;
+}
+
+input[type="range"]::-webkit-progress-value {
+  -webkit-appearance: none;
+  height: $slider-height;
+  background: $background-filled-slider;
+  border: 0;
+  margin-top: 0;
+}
+
+/* Firefox */
+
+input[type="range"]::-moz-focus-outer {
+  border: 0;
+}
+
+input[type="range"]::-moz-range-track {
+  width: $slider-width;
+  height: $slider-height;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: $thumb-width;
+  height: $thumb-height;
+  background: $thumb-background;
+  border-radius: $thumb-radius;
+  border: $thumb-border;
+  position: relative;
+}
+
+input[type="range"]::-moz-range-track:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+input[type="range"]::-moz-range-progress {
+  height: $slider-height;
+  background: $background-filled-slider;
+  border: 0;
+  margin-top: 0;
+}
+
+/* IE & Edge */
+
+input[type="range"]::-ms-track {
+  background: $background-slider;
+  border: 0;
+  border-color: transparent;
+  border-radius: 0;
+  border-width: 0;
+  color: transparent;
+  height: $slider-height;
+  margin-top: 10px;
+  width: $slider-width;
+  min-width: $slider-width;
+}
+
+input[type="range"]::-ms-thumb {
+  background: $thumb-background;
+  border-radius: $thumb-radius;
+  border: $thumb-border;
+  width: $thumb-width;
+  height: $thumb-height;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background: $background-filled-slider;
+  border-radius: 0;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background: $background-slider;
+  border-radius: 0;
+}
+
+input[type="range"]::-ms-tooltip {
+  display: none;
+}
