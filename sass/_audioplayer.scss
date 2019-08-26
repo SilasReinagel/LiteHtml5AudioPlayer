@@ -10,6 +10,7 @@
   background-color: $background-color;
   border-radius: 5px;
   box-shadow: $standard-shadow;
+  overflow: hidden;
 }
 
 #play-pause-button {
@@ -124,13 +125,14 @@
   counter-reset: none;
   display: flex;
   flex-direction: column;
+  align-content: left;
 }
 
 #audio #playlist li {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1em;
   font-weight: 500;
-  margin: 0.7em 0.2em;
+  margin: 8px 0.2em;
 }
 
 #audio #playlist li:before {

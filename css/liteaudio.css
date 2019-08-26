@@ -8,7 +8,8 @@
   justify-content: center;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4); }
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  overflow: hidden; }
 
 #play-pause-button {
   width: 1.6em;
@@ -105,13 +106,14 @@
   list-style-type: none;
   counter-reset: none;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  align-content: left; }
 
 #audio #playlist li {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1em;
   font-weight: 500;
-  margin: 0.7em 0.2em; }
+  margin: 8px 0.2em; }
 
 #audio #playlist li:before {
   content: "";
@@ -146,7 +148,7 @@ input[type="range"] {
   display: inline-block;
   height: 6px;
   outline: none;
-  margin: 2px 0.2em; }
+  margin: 3px; }
 
 .song-progress-control {
   width: 100%; }

@@ -11,6 +11,7 @@ $thumb-background: #999;
 $thumb-border: 0px solid #777;
 $shadow-size: -8px;
 $fit-thumb-in-slider: -8px;  
+$slider-margin: 3px;
 
 input[type="range"] {
   background: $background-slider;
@@ -18,7 +19,7 @@ input[type="range"] {
   display: inline-block;
   height: $slider-height;
   outline: none;
-  margin: 2px 0.2em;
+  margin: $slider-margin;
 }
 
 .song-progress-control {
