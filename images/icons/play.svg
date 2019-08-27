@@ -1,10 +1,52 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="124.512px" height="124.512px" viewBox="0 0 124.512 124.512" style="enable-background:new 0 0 124.512 124.512;"
-	 xml:space="preserve">
-<g>
-	<path d="M113.956,57.006l-97.4-56.2c-4-2.3-9,0.6-9,5.2v112.5c0,4.6,5,7.5,9,5.2l97.4-56.2
-		C117.956,65.105,117.956,59.306,113.956,57.006z"/>
-</g>
-</svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 24 24"
+   xml:space="preserve"
+   sodipodi:docname="play.svg"
+   width="24"
+   height="24"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"><metadata
+     id="metadata9"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+     id="defs7" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview5"
+     showgrid="false"
+     scale-x="1.9"
+     viewbox-height="24"
+     viewbox-x="-3"
+     viewbox-y="-40"
+     inkscape:zoom="5.6191813"
+     inkscape:cx="-9.342998"
+     inkscape:cy="20.9995"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Capa_1" /><path
+     d="M 20.86292,11.601075 5.0289202,0.68107654 c -0.167622,-0.115206 -0.38493,-0.127218 -0.564018,-0.033852 -0.179634,0.094458 -0.29211,0.280098 -0.29211,0.48320996 V 22.970433 c 0,0.203112 0.112476,0.389298 0.29211,0.483756 0.079716,0.0415 0.167076,0.06224 0.25389,0.06224 0.108654,0 0.216762,-0.03276 0.310128,-0.09664 l 15.8339998,-10.92 c 0.147966,-0.102102 0.235872,-0.269724 0.235872,-0.449358 0,-0.179634 -0.08845,-0.347256 -0.235872,-0.449358 z"
+     id="path2"
+     inkscape:connector-curvature="0"
+     style="stroke-width:0.546" /></svg>
