@@ -143,6 +143,9 @@
     width: 0;
     height: 0; } }
 input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background: #bbb;
   cursor: pointer;
   display: inline-block;

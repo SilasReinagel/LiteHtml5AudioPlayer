@@ -14,6 +14,9 @@ $fit-thumb-in-slider: -8px;
 $slider-margin: 3px;
 
 input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background: $background-slider;
   cursor: pointer;
   display: inline-block;
