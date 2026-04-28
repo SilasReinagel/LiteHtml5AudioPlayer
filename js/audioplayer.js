@@ -1,17 +1,54 @@
-function AudioSettings({ volume, isLooping }) {
-    console.log({ volume, isLooping });
-    this.volume = volume || 50;
-    this.isLooping = isLooping || false;
+function AudioSettings({ volume, isLooping, storageKey }) {
+    this.volume = Number.isFinite(volume) ? volume : 50;
+    this.isLooping = Boolean(isLooping);
+    this.storageKey = storageKey || window.location.origin;
+    this.onVolumeChange = () => {};
+    this.onLoopingChange = () => {};
+
+    this._load = () => {
+        try {
+            const raw = localStorage.getItem(this.storageKey);
+            if (!raw)
+                return;
+            const savedSettings = JSON.parse(raw);
+            if (Number.isFinite(savedSettings.volume))
+                this.volume = savedSettings.volume;
+            if (typeof savedSettings.isLooping === "boolean")
+                this.isLooping = savedSettings.isLooping;
+        } catch (error) {
+            console.warn("Unable to load audio settings", error);
+        }
+    };
+
+    this._save = () => {
+        try {
+            localStorage.setItem(this.storageKey, JSON.stringify({
+                volume: this.volume,
+                isLooping: this.isLooping
+            }));
+        } catch (error) {
+            console.warn("Unable to save audio settings", error);
+        }
+    };
+
     this.setVolume = (volume) => {
         this.volume = volume;
+        this._save();
         this.onVolumeChange(volume);
-    }
-    this.onVolumeChange = (volume) => {};
+    };
+
+    this.setLooping = (isLooping) => {
+        this.isLooping = isLooping;
+        this._save();
+        this.onLoopingChange(isLooping);
+    };
+
+    this._load();
 };
 
 function AudioPlayer(settings, songs) {
     this._settings = settings || new AudioSettings({ volume: 80, isLooping: false });
-    this._audio = new Audio("audio-player", settings);
+    this._audio = new Audio("audio-player", this._settings);
     this._songImg = new Image("song-img");
     this._artist = new Text("artist");
     this._name = new Text("song-name");
@@ -22,7 +59,7 @@ function AudioPlayer(settings, songs) {
     });
     this._volumeControl = new VolumeControl(this._settings);
     this._songProgress = new SongProgress(this._audio);
-    this._playlist = new Playlist(songs, this._audio, (song) => {
+    this._playlist = new Playlist(songs, this._audio, this._settings, (song) => {
         this._songImg.setImg(song.img);
         this._artist.setText(song.artist);
         this._name.setText(song.name);
@@ -37,6 +74,7 @@ function Audio(id, settings) {
     this._isPlaying = false;
     this._isSeeking = false;
     this._element.volume = settings.volume / 100;
+    this._element.loop = settings.isLooping;
     this._element.ondurationchange = () => {};
     this._element.onplay = () => this._isPlaying = true;
     this._element.onpause = () => {
@@ -105,6 +143,8 @@ function Audio(id, settings) {
 
     this.setVolume = (volume) => this._element.volume = volume / 100;
 
+    this.setLooping = (isLooping) => this._element.loop = isLooping;
+
     this.setAudioSources = (sources) => {
         for (let source of this._audioSources)
             this._element.removeChild(source);
@@ -129,6 +169,7 @@ function Audio(id, settings) {
     };
 
     settings.onVolumeChange = (volume) => this.setVolume(volume);
+    settings.onLoopingChange = (isLooping) => this.setLooping(isLooping);
 }
 
 function ImageButton(id, onclick) {
@@ -242,7 +283,7 @@ function Range(id, onInput, onChange, onInputForMsBrowser) {
     this.setMax = (max) => this._element.max = max;
 }
 
-function Playlist(songs, audio, onSongChange) {
+function Playlist(songs, audio, settings, onSongChange) {
     audio.addOnEndedListener(() => {
         if (this._songIndex !== songs.length - 1)
             this._changeSong(this._songIndex + 1);
@@ -250,7 +291,7 @@ function Playlist(songs, audio, onSongChange) {
             this._changeSong(0);
     });
     this._songIndex = -1;
-    this._isLooping = false;
+    this._isLooping = settings.isLooping;
     this._playlist = new List("playlist");
     this._playlist.setItems(songs.map((song, index) => {
         let item = document.getElementById("sample-item").cloneNode(true);
@@ -263,8 +304,10 @@ function Playlist(songs, audio, onSongChange) {
     }));
     this._loop = new ImageButton("loop-button", () => {
         this._isLooping = !this._isLooping;
-        this._previous.setEnabled(true);
-        this._next.setEnabled(true);
+        settings.setLooping(this._isLooping);
+        this._loop.setEnabled(this._isLooping);
+        this._previous.setEnabled(this._songIndex !== 0 || this._isLooping);
+        this._next.setEnabled(this._songIndex !== songs.length - 1 || this._isLooping);
     });
     this._previous = new ImageButton("previous-button", () => this._changeSong(this._songIndex === 0 ? songs.length - 1 : this._songIndex - 1));
     this._next = new ImageButton("next-button", () => this._changeSong(this._songIndex === songs.length - 1 ? 0 : this._songIndex + 1));
@@ -285,6 +328,9 @@ function Playlist(songs, audio, onSongChange) {
     };
 
     this.selectSong(0);
+    this._loop.setEnabled(this._isLooping);
+    this._previous.setEnabled(this._isLooping);
+    this._next.setEnabled(songs.length > 1 || this._isLooping);
 }
 
 function Song(artist, name, album, img, sources) {
