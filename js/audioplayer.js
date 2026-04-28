@@ -1,12 +1,53 @@
-function AudioSettings({ volume, isLooping }) {
-    console.log({ volume, isLooping });
-    this.volume = volume || 50;
-    this.isLooping = isLooping || false;
+function AudioSettings({ volume, isLooping, storageKey }) {
+    this.storageKey = storageKey || "lite-html5-audio-player-settings";
+    this.volume = typeof volume === "number" ? volume : 50;
+    this.isLooping = Boolean(isLooping);
+    this.onVolumeChange = (volume) => {};
+    this.onLoopingChange = (isLooping) => {};
+
     this.setVolume = (volume) => {
         this.volume = volume;
         this.onVolumeChange(volume);
+        this.save();
+    };
+
+    this.setLooping = (isLooping) => {
+        this.isLooping = isLooping;
+        this.onLoopingChange(isLooping);
+        this.save();
+    };
+
+    this.save = () => {
+        if (typeof localStorage === "undefined")
+            return;
+
+        localStorage.setItem(this.storageKey, JSON.stringify({
+            volume: this.volume,
+            isLooping: this.isLooping,
+        }));
+    };
+}
+
+AudioSettings.load = ({ volume, isLooping, storageKey }) => {
+    const resolvedStorageKey = storageKey || "lite-html5-audio-player-settings";
+
+    if (typeof localStorage === "undefined")
+        return new AudioSettings({ volume, isLooping, storageKey: resolvedStorageKey });
+
+    try {
+        const serializedSettings = localStorage.getItem(resolvedStorageKey);
+        if (!serializedSettings)
+            return new AudioSettings({ volume, isLooping, storageKey: resolvedStorageKey });
+
+        const parsedSettings = JSON.parse(serializedSettings);
+        return new AudioSettings({
+            volume: typeof parsedSettings.volume === "number" ? parsedSettings.volume : volume,
+            isLooping: typeof parsedSettings.isLooping === "boolean" ? parsedSettings.isLooping : isLooping,
+            storageKey: resolvedStorageKey,
+        });
+    } catch (error) {
+        return new AudioSettings({ volume, isLooping, storageKey: resolvedStorageKey });
     }
-    this.onVolumeChange = (volume) => {};
 };
 
 function AudioPlayer(settings, songs) {
@@ -27,7 +68,7 @@ function AudioPlayer(settings, songs) {
         this._artist.setText(song.artist);
         this._name.setText(song.name);
         this._album.setText(song.album);
-    });
+    }, this._settings);
     document.getElementById('audio').classList.remove('hidden');
 }
 
@@ -242,7 +283,7 @@ function Range(id, onInput, onChange, onInputForMsBrowser) {
     this.setMax = (max) => this._element.max = max;
 }
 
-function Playlist(songs, audio, onSongChange) {
+function Playlist(songs, audio, onSongChange, settings) {
     audio.addOnEndedListener(() => {
         if (this._songIndex !== songs.length - 1)
             this._changeSong(this._songIndex + 1);
@@ -250,7 +291,7 @@ function Playlist(songs, audio, onSongChange) {
             this._changeSong(0);
     });
     this._songIndex = -1;
-    this._isLooping = false;
+    this._isLooping = settings.isLooping;
     this._playlist = new List("playlist");
     this._playlist.setItems(songs.map((song, index) => {
         let item = document.getElementById("sample-item").cloneNode(true);
@@ -262,12 +303,16 @@ function Playlist(songs, audio, onSongChange) {
         return item;
     }));
     this._loop = new ImageButton("loop-button", () => {
-        this._isLooping = !this._isLooping;
-        this._previous.setEnabled(true);
-        this._next.setEnabled(true);
+        settings.setLooping(!this._isLooping);
     });
     this._previous = new ImageButton("previous-button", () => this._changeSong(this._songIndex === 0 ? songs.length - 1 : this._songIndex - 1));
     this._next = new ImageButton("next-button", () => this._changeSong(this._songIndex === songs.length - 1 ? 0 : this._songIndex + 1));
+
+    this._renderLoopState = () => {
+        this._loop.setEnabled(this._songIndex !== -1);
+        this._previous.setEnabled(this._songIndex > 0 || this._isLooping);
+        this._next.setEnabled(this._songIndex !== -1 && (this._songIndex < songs.length - 1 || this._isLooping));
+    };
 
     this._changeSong = (songIndex) => {
         this.selectSong(songIndex);
@@ -278,13 +323,18 @@ function Playlist(songs, audio, onSongChange) {
         if (songIndex === this._songIndex)
             return;
         onSongChange(songs[songIndex]);
-        this._previous.setEnabled(songIndex !== 0 || this._isLooping);
-        this._next.setEnabled(songIndex !== songs.length - 1 || this._isLooping);
         audio.setAudioSources(songs[songIndex].sources);
         this._songIndex = songIndex;
+        this._renderLoopState();
+    };
+
+    settings.onLoopingChange = (isLooping) => {
+        this._isLooping = isLooping;
+        this._renderLoopState();
     };
 
     this.selectSong(0);
+    this._renderLoopState();
 }
 
 function Song(artist, name, album, img, sources) {
