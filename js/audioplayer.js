@@ -252,6 +252,7 @@ function Playlist(songs, audio, onSongChange) {
     this._songIndex = -1;
     this._isLooping = false;
     this._playlist = new List("playlist");
+    this._currentSongElement = null;
     this._playlist.setItems(songs.map((song, index) => {
         let item = document.getElementById("sample-item").cloneNode(true);
         let songName = item.getElementsByTagName("label")[0];
@@ -277,11 +278,19 @@ function Playlist(songs, audio, onSongChange) {
     this.selectSong = (songIndex) => {
         if (songIndex === this._songIndex)
             return;
+
+        let playlistItems = this._playlist.getItems();
+        if (this._currentSongElement)
+            this._currentSongElement.classList.remove("is-playing");
+
         onSongChange(songs[songIndex]);
         this._previous.setEnabled(songIndex !== 0 || this._isLooping);
         this._next.setEnabled(songIndex !== songs.length - 1 || this._isLooping);
         audio.setAudioSources(songs[songIndex].sources);
         this._songIndex = songIndex;
+        this._currentSongElement = playlistItems[songIndex] || null;
+        if (this._currentSongElement)
+            this._currentSongElement.classList.add("is-playing");
     };
 
     this.selectSong(0);
