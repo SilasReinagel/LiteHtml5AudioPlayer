@@ -133,6 +133,8 @@
   font-size: 1em;
   font-weight: 500;
   margin: 8px 0.2em;
+  border-radius: 0.4em;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 #audio #playlist li:before {
@@ -142,6 +144,7 @@
 
 #audio #playlist li:hover {
   cursor: pointer;
+  background-color: rgba($light-color, 0.2);
 }
 
 #audio #playlist li img {
@@ -149,10 +152,32 @@
   margin: 0 1em 0 0;
   width: 1em;
   height: auto;
+  filter: invert(0.5) brightness(1.2);
 }
 
 #audio #playlist li:hover img{
   visibility: visible;
+}
+
+#audio #playlist li label {
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+#audio #playlist li.is-playing {
+  background: linear-gradient(90deg, rgba($light-color, 0.28), rgba($light-color, 0.08));
+  box-shadow: inset 3px 0 0 $control-color;
+  color: $control-color;
+  transform: translateX(0.15em);
+}
+
+#audio #playlist li.is-playing img {
+  visibility: visible;
+  filter: invert(0.3) brightness(0.75);
+}
+
+#audio #playlist li.is-playing label {
+  color: $control-color;
+  text-shadow: 0 0 0.35em rgba($control-color, 0.18);
 }
 
 #audio #playlist div {
